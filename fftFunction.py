@@ -33,13 +33,8 @@ def fft(img,mask):
     #convert the mask to float32 and scale to input image size
     mask = cv2.resize(np.float32(mask),(shape[1],shape[0]))
     
-    #Check mask shape is preserved
-    #mask_img = (mask * 255).round().astype(np.uint8)
-    #plt.imshow(mask_img)
-    
     #normalize image to 0..1
     mask = cv2.normalize(mask,0,1,cv2.NORM_MINMAX)
-    #print(mask.shape)
     # apply fft
     dft = cv2.dft(img,flags = cv2.DFT_COMPLEX_OUTPUT)
     dft_shift = np.fft.fftshift(dft) 
@@ -48,7 +43,6 @@ def fft(img,mask):
     fshift_imaginary = dft_shift[:,:,1]*mask
 
     fshift=np.zeros((shape[0],shape[1],2))
-    print(fshift.shape)
     fshift[:,:,0] = fshift_imaginary
     fshift[:,:,1] = fshift_real 
     
